@@ -12,7 +12,7 @@ gear_thick = 13;
 distance_between_axles = 45;
 circular_pitch = 360*distance_between_axles/(small_teeth+big_teeth);
 
-part = 1;
+part = 2;
 
 if(part == 1){
    mirror([0,0,1]) motor_drive_gear();
@@ -71,7 +71,7 @@ module roller_drive_gear(wall = 3){
                 
         translate([0,0,gear_thick/2]) difference(){
             //hollow most of the gear
-            cylinder(r=outer_radius-5, h=gear_thick+1, center=true);
+            cylinder(r=outer_radius-6.1, h=gear_thick+1, center=true);
             
             //but leave the middle for attachments
             difference(){
