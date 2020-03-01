@@ -3,9 +3,12 @@ use <herringbone_gears.scad>
 use <functions.scad>
 
 //gear variables
-small_teeth = 11;
+small_teeth = 9;
 motor_shaft_rad = 5/2+.2;
-drive_shaft_rad = 12/2+.2;
+//drive_shaft_rad = 12/2+.2;
+
+drive_shaft_rad = 25.4/2/2+.2;
+
 big_teeth = 43;
 gear_thick = 13;
 
