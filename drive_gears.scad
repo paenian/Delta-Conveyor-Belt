@@ -9,10 +9,10 @@ motor_shaft_rad = 5/2+.2;
 
 drive_shaft_rad = 25.4/2/2+.2;
 
-big_teeth = 43;
+big_teeth = 47;
 gear_thick = 13;
 
-distance_between_axles = 45;
+distance_between_axles = 50;
 circular_pitch = 360*distance_between_axles/(small_teeth+big_teeth);
 
 part = 2;
