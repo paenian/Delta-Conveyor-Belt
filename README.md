@@ -1,4 +1,4 @@
-# Kossel-Conveyor-Belt
-Adding a conveyor belt to a Kossel printer for part ejection.
+# Delta-Conveyor-Belt
+Adding a conveyor belt to my delta printer for part ejection.
 
-![Netty is the official mascot](https://github.com/paenian/Kossel-Conveyor-Belt/blob/master/netty_printer.jpg)
+![Netty is the official mascot](https://github.com/paenian/Delta-Conveyor-Belt/blob/master/netty_printer.jpg)
