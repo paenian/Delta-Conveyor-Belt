@@ -46,4 +46,4 @@ Replace the front three and back three hex standoffs with 10mm long ones - middl
 
 
 
-![Netty is the official mascot](https://github.com/paenian/Kossel-Conveyor-Belt/blob/master/netty_printer.jpg)
+![Netty is the official mascot](https://github.com/paenian/Delta-Conveyor-Belt/blob/master/netty_printer.jpg)
