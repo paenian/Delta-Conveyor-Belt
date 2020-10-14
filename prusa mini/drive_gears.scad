@@ -11,8 +11,8 @@ drive_shaft_rad = 25.4*(5/16)/2+.2;
 
 small_teeth = 19;
 big_teeth = 17;
-gear_thick = 17;
-distance_between_axles = 40;
+gear_thick = 19;
+distance_between_axles = 41;
 
 cone_distance_1=1000;
 cone_distance_2=80;
@@ -22,7 +22,7 @@ backlash = .25;
 
 circular_pitch = 360*distance_between_axles/(small_teeth+big_teeth);
 
-part = 100;
+part = 1;
 
 if(part == 1){
    mirror([0,0,1]) motor_drive_gear();
@@ -135,7 +135,7 @@ module motor_drive_gear(){
             }
             
             //logo speed holes
-            translate([0,0,gear_thick/2]){
+            translate([0,0,,gear_thick-3]){
                 mirror([1,0,0]) scale([sc,sc,1]) translate([-89.75+3,-171-1,0]) linear_extrude(height=gear_thick+motor_offset+1) import("../logos/printshift.dxf", layer="sides");
             }
             //logo p
@@ -181,12 +181,23 @@ module roller_drive_gear(wall = 3){
     
     lift = gear_thick+1;
     
+    fillet = 3;
+    
     difference(){
         union(){
             //gear
             chamfered_herring_gear(height=gear_thick, number_of_teeth=big_teeth, circular_pitch=circular_pitch, teeth_twist=0, pressure_angle=pressure_angle, cone_distance_1=cone_distance_2, cone_distance_2=cone_distance_1,clearance = clearance, backlash = backlash);
             //raised center
             translate([0,0,-gear_offset]) cylinder(r=drive_shaft_rad+4, h=gear_thick+gear_offset);
+            
+           //shaft fillet
+                difference(){
+                    translate([0,0,-fillet]) cylinder(r=drive_shaft_rad+4+fillet, h=fillet);
+                    translate([0,0,-fillet]) rotate_extrude(){
+                        translate([drive_shaft_rad+4+fillet,0,0]) circle(r=fillet);
+                    }
+                }
+            
         }
         
         //the shaft
@@ -216,14 +227,24 @@ module roller_drive_gear(wall = 3){
                 
             
             
-            //screwhole & nut trap
-            translate([drive_shaft_rad+3.5,-5,gear_thick/2+.5]) {
+            //front screwhole & nut trap
+            translate([drive_shaft_rad+3.5,-5,gear_thick-4.5]) {
                 hull(){
                     cube([6,3,6], center=true);
                     translate([0,0,gear_thick]) cube([6,3,6], center=true);
                 }
                 translate([0,-5,0]) rotate([-90,0,0]) cylinder(r=3.4/2, h=25);
-                translate([0,8,0]) rotate([-90,0,0]) cylinder(r=6/2, h=25);
+                translate([0,10,0]) rotate([-90,0,0]) cylinder(r=6/2, h=25);
+            }
+            
+            //rear screwhole & nut trap
+            mirror([0,0,1]) translate([drive_shaft_rad+3.5,-5,-5]) {
+                hull(){
+                    cube([6,3,6], center=true);
+                    translate([0,0,gear_thick]) cube([6,3,6], center=true);
+                }
+                translate([0,-5,0]) rotate([-90,0,0]) cylinder(r=3.4/2, h=25);
+                translate([0,10,0]) rotate([-90,0,0]) cylinder(r=6/2, h=25);
             }
         }
         

@@ -206,11 +206,11 @@ module chamfered_herring_gear(height=10, chamfer_gradient=tan(45), teeth_twist=1
         }
         //Cut edges
         union() {
-            cylinder(h=edge + epsilon, r1=radius, r2=outer_radius + epsilon*chamfer_gradient);
+            cylinder(h=edge + epsilon, r1=radius-1, r2=outer_radius + epsilon*chamfer_gradient);
             translate([0,0,edge])
                 cylinder(h=height-2*edge, r=outer_radius);
             translate([0,0,height-edge-epsilon])
-                cylinder(h=edge + epsilon, r2=radius, r1=outer_radius + epsilon*chamfer_gradient);
+                cylinder(h=edge + epsilon, r2=radius-1, r1=outer_radius + epsilon*chamfer_gradient);
         }
     }
 }
