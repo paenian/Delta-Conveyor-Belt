@@ -12,7 +12,7 @@ drive_shaft_rad = 25.4*(5/16)/2+.2;
 small_teeth = 19;
 big_teeth = 17;
 gear_thick = 19;
-distance_between_axles = 41;
+distance_between_axles = 43;
 
 cone_distance_1=1000;
 cone_distance_2=80;
@@ -22,7 +22,7 @@ backlash = .25;
 
 circular_pitch = 360*distance_between_axles/(small_teeth+big_teeth);
 
-part = 1;
+part = 100;
 
 if(part == 1){
    mirror([0,0,1]) motor_drive_gear();
