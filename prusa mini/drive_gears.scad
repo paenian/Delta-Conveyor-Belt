@@ -22,7 +22,7 @@ backlash = .25;
 
 circular_pitch = 360*distance_between_axles/(small_teeth+big_teeth);
 
-part = 100;
+part = 5;
 
 if(part == 1){
    mirror([0,0,1]) motor_drive_gear();
@@ -43,6 +43,10 @@ if(part == 4){
     mirror([0,0,1]) motor_drive_gear();
 }
 
+if(part == 5){
+    mirror([0,0,1]) motor_drive_gear_clamp();
+}
+
 if(part == 100){
     assembled();
 }
@@ -50,7 +54,8 @@ if(part == 100){
 module assembled(){
     difference(){
         union(){
-            render() mirror([0,0,1]) motor_drive_gear();
+            //render() mirror([0,0,1]) motor_drive_gear();
+            render() mirror([0,0,1]) motor_drive_gear_clamp();
             render() mirror([0,0,1]) roller_drive_gear();
         }
         //translate([0,100,0]) cube([200,200,200], center=true);
@@ -249,4 +254,98 @@ module roller_drive_gear(wall = 3){
         }
         
     }
+}
+
+//this version uses the d-shaft fully and has clamp nuts like the roller drive gear.  The set-screw style kept breaking :-(
+module motor_drive_gear_clamp(){
+    outer_radius = gear_outer_radius(small_teeth, circular_pitch);
+    motor_offset = 6; //distance to move gear away from the motor
+    d_offset = .75;
+    
+    motor_shaft_thick = 5+3;
+    
+    motor_shaft_d = 5.5;
+    
+    fillet = 7;
+    sc = .42;
+    
+    translate([distance_between_axles+1,0,0]) rotate([0,0,360/small_teeth])
+        difference(){
+            union(){
+                rotate([180,0,0]) translate([0,0,-gear_thick]) chamfered_herring_gear(height=gear_thick, number_of_teeth=small_teeth, circular_pitch=circular_pitch, teeth_twist=0, pressure_angle=pressure_angle, cone_distance_1=cone_distance_1, cone_distance_2=cone_distance_2,clearance = clearance, backlash = backlash);
+                //raised center
+                translate([0,0,-motor_offset]) cylinder(r=motor_shaft_rad+motor_shaft_thick, h=gear_thick+motor_offset);
+                
+                //shaft fillet
+                difference(){
+                    translate([0,0,-fillet]) cylinder(r=motor_shaft_rad+motor_shaft_thick+fillet, h=fillet);
+                    translate([0,0,-fillet]) rotate_extrude(){
+                        translate([motor_shaft_rad+motor_shaft_thick+fillet,0,0]) circle(r=fillet);
+                    }
+                }
+            }
+            
+            //D-shaft
+            translate([0,0,-motor_offset-1.1]) union(){
+                intersection(){
+                    cylinder(r=motor_shaft_rad, h=gear_thick+motor_offset-1);
+                    translate([0,(motor_shaft_rad*2-motor_shaft_d)/2,0]) cube([motor_shaft_rad*2, motor_shaft_d, gear_thick*6], center=true);
+                }
+                cylinder(r=motor_shaft_rad, h=d_offset);
+            }
+            
+            //clamp slot
+            translate([0,0,-6]){
+                translate([(motor_shaft_rad+10)/2,0,0]) cube([motor_shaft_rad+12,1,gear_thick*2+2], center=true);
+                intersection(){
+                    difference(){
+                        cylinder(r=drive_shaft_rad+10, h=gear_thick+1);
+                        translate([0,0,-.5]) cylinder(r=drive_shaft_rad+9, h=gear_thick+2);
+                    }
+                    union(){
+                        translate([0,25,0]) cube([50,50,50], center=true);
+                    }
+                }
+            }
+            
+            //clamp screwhole & nut trap
+            translate([motor_shaft_rad+3.5,-5,-motor_offset/2]) {
+                hull(){
+                    cube([6,3,6], center=true);
+                    translate([0,0,-gear_thick]) cube([6,3,6], center=true);
+                }
+                translate([0,-5,0]) rotate([-90,0,0]) cylinder(r=3.4/2, h=25);
+                translate([0,10,0]) rotate([-90,0,0]) cylinder(r=6/2, h=25);
+            }
+            
+            //set screws hole on the D shaft
+            *for(i=[-motor_offset/2]){ //gear_thick/2, 
+                translate([0,0,i]) rotate([90,0,0]) {
+                    cylinder(r=1.6, h=50);
+                    translate([0,0,8]) cylinder(r=6/2, h=25);
+                }
+            }
+            
+            //extend the square nuts
+            *translate([0,-4,gear_thick/2])
+            rotate([90,0,0]) hull(){
+                cube([6,6,3], center=true);
+                translate([0,gear_thick,0]) cube([6,6,3], center=true);
+            }
+            *translate([0,-4,-motor_offset/2])
+            rotate([90,0,0]) hull(){
+                cube([6,6,3], center=true);
+                translate([0,-gear_thick,0]) cube([6,6,3], center=true);
+            }
+            
+            
+            //logo speed holes
+            translate([0,0,,gear_thick-3]){
+                mirror([1,0,0]) scale([sc,sc,1]) translate([-89.75+3,-171-1,0]) linear_extrude(height=gear_thick+motor_offset+1) import("../logos/printshift.dxf", layer="sides");
+            }
+            //logo p
+            translate([0,0,gear_thick-1]){
+                mirror([1,0,0]) scale([sc,sc,1]) translate([-89.75+3,-171-1,0]) linear_extrude(height=2) import("../logos/printshift.dxf", layer="p");
+            }
+        }
 }
