@@ -22,7 +22,7 @@ backlash = .25;
 
 circular_pitch = 360*distance_between_axles/(small_teeth+big_teeth);
 
-part = 5;
+part = 2;
 
 if(part == 1){
    mirror([0,0,1]) motor_drive_gear();
@@ -191,6 +191,7 @@ module roller_drive_gear(wall = 3){
     difference(){
         union(){
             //gear
+            rotate([180,0,0]) translate([0,0,-gear_thick])
             chamfered_herring_gear(height=gear_thick, number_of_teeth=big_teeth, circular_pitch=circular_pitch, teeth_twist=0, pressure_angle=pressure_angle, cone_distance_1=cone_distance_2, cone_distance_2=cone_distance_1,clearance = clearance, backlash = backlash);
             //raised center
             translate([0,0,-gear_offset]) cylinder(r=drive_shaft_rad+4, h=gear_thick+gear_offset);
@@ -272,7 +273,8 @@ module motor_drive_gear_clamp(){
     translate([distance_between_axles+1,0,0]) rotate([0,0,360/small_teeth])
         difference(){
             union(){
-                rotate([180,0,0]) translate([0,0,-gear_thick]) chamfered_herring_gear(height=gear_thick, number_of_teeth=small_teeth, circular_pitch=circular_pitch, teeth_twist=0, pressure_angle=pressure_angle, cone_distance_1=cone_distance_1, cone_distance_2=cone_distance_2,clearance = clearance, backlash = backlash);
+                //rotate([180,0,0]) translate([0,0,-gear_thick]) 
+                chamfered_herring_gear(height=gear_thick, number_of_teeth=small_teeth, circular_pitch=circular_pitch, teeth_twist=0, pressure_angle=pressure_angle, cone_distance_1=cone_distance_1, cone_distance_2=cone_distance_2,clearance = clearance, backlash = backlash);
                 //raised center
                 translate([0,0,-motor_offset]) cylinder(r=motor_shaft_rad+motor_shaft_thick, h=gear_thick+motor_offset);
                 
