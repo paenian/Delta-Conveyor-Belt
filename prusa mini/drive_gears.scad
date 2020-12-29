@@ -177,7 +177,7 @@ module shaft_clamp(){
 module roller_drive_gear(wall = 3){
     %rotate([0,0,180]) motor_drive_gear();
     
-    gear_offset = 8;
+    gear_offset = 2;
     
     radius = gear_radius(big_teeth, circular_pitch);
     outer_radius = gear_outer_radius(big_teeth, circular_pitch);
@@ -207,7 +207,7 @@ module roller_drive_gear(wall = 3){
         }
         
         //the shaft
-        translate([0,0,-.5-gear_offset]) cylinder(r=drive_shaft_rad, h=gear_thick+1+gear_offset);
+        translate([0,0,-.5-gear_offset-1]) cylinder(r=drive_shaft_rad, h=gear_thick+1+gear_offset+1);
         
         //clamping system
         rotate([0,0,7]) translate([0,0,-.5]) {
