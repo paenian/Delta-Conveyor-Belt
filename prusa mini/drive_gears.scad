@@ -9,10 +9,10 @@ motor_shaft_d = 4.8;
 
 drive_shaft_rad = 25.4*(5/16)/2+.2;
 
-small_teeth = 19;
+small_teeth = 15;
 big_teeth = 17;
 gear_thick = 19;
-distance_between_axles = 43;
+distance_between_axles = 40;
 
 cone_distance_1=1000;
 cone_distance_2=80;
@@ -22,7 +22,7 @@ backlash = .25;
 
 circular_pitch = 360*distance_between_axles/(small_teeth+big_teeth);
 
-part = 2;
+part = 100;
 
 if(part == 1){
    mirror([0,0,1]) motor_drive_gear();
@@ -267,7 +267,7 @@ module motor_drive_gear_clamp(){
     
     motor_shaft_d = 5.5;
     
-    fillet = 7;
+    fillet = 3;
     sc = .42;
     
     translate([distance_between_axles+1,0,0]) rotate([0,0,360/small_teeth])
@@ -288,7 +288,7 @@ module motor_drive_gear_clamp(){
             }
             
             //D-shaft
-            translate([0,0,-motor_offset-1.1]) union(){
+            rotate([0,0,-90]) translate([0,0,-motor_offset-1.1]) union(){
                 intersection(){
                     cylinder(r=motor_shaft_rad, h=gear_thick+motor_offset-1);
                     translate([0,(motor_shaft_rad*2-motor_shaft_d)/2,0]) cube([motor_shaft_rad*2, motor_shaft_d, gear_thick*6], center=true);
@@ -297,12 +297,12 @@ module motor_drive_gear_clamp(){
             }
             
             //clamp slot
-            translate([0,0,-6]){
-                translate([(motor_shaft_rad+10)/2,0,0]) cube([motor_shaft_rad+12,1,gear_thick*2+2], center=true);
+            translate([0,0,-3]){
+                translate([(motor_shaft_rad+9)/2,0,0]) cube([motor_shaft_rad+11,1,gear_thick*2+2], center=true);
                 intersection(){
                     difference(){
-                        cylinder(r=drive_shaft_rad+10, h=gear_thick+1);
-                        translate([0,0,-.5]) cylinder(r=drive_shaft_rad+9, h=gear_thick+2);
+                        cylinder(r=drive_shaft_rad+9, h=gear_thick+1);
+                        translate([0,0,-.5]) cylinder(r=drive_shaft_rad+8, h=gear_thick+2);
                     }
                     union(){
                         translate([0,25,0]) cube([50,50,50], center=true);
@@ -315,6 +315,16 @@ module motor_drive_gear_clamp(){
                 hull(){
                     cube([6,3,6], center=true);
                     translate([0,0,-gear_thick]) cube([6,3,6], center=true);
+                }
+                translate([0,-5,0]) rotate([-90,0,0]) cylinder(r=3.4/2, h=25);
+                translate([0,10,0]) rotate([-90,0,0]) cylinder(r=6/2, h=25);
+            }
+            
+            //second screwhole and nut trap
+            translate([motor_shaft_rad+3.5,-5,gear_thick/2-1]) {
+                hull(){
+                    cube([6,3,6], center=true);
+                    translate([0,0,gear_thick]) cube([6,3,6], center=true);
                 }
                 translate([0,-5,0]) rotate([-90,0,0]) cylinder(r=3.4/2, h=25);
                 translate([0,10,0]) rotate([-90,0,0]) cylinder(r=6/2, h=25);
@@ -342,7 +352,7 @@ module motor_drive_gear_clamp(){
             
             
             //logo speed holes
-            translate([0,0,,gear_thick-3]){
+            translate([0,0,,gear_thick-1.5]){
                 mirror([1,0,0]) scale([sc,sc,1]) translate([-89.75+3,-171-1,0]) linear_extrude(height=gear_thick+motor_offset+1) import("../logos/printshift.dxf", layer="sides");
             }
             //logo p
