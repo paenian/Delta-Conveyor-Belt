@@ -31,7 +31,7 @@ Right now, the belt is 150mm in width - so your Y axis shrinks a bit when printi
 
 
 ## PARTS NEEDED
-.2mm thick KAPTON film - 150mm by ~400mm
+.2mm thick KAPTON film - 155mm by 425-430mm
  - Alternative bed material is PEI film or Dur-a-lar
 
 5/16" diameter tool steel rod, for the rollers
