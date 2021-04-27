@@ -3,9 +3,9 @@
 
 * [HOME](./)
 
-* [Tutorials](./tutorials/index)
-  * [Build PrintShift!](./tutorials/PrintShift)
-  * [Make a looped conveyor Belt](./tutorials/ContinuousBelt)
+* [Tutorials](./tutorials/index.md)
+  * [Build PrintShift!](./tutorials/PrintShift.md)
+  * [Make a looped conveyor Belt](./tutorials/ContinuousBelt.md)
 
 * [About](./about/index)
 
