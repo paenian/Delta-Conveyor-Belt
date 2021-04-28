@@ -1,6 +1,21 @@
+---
+title: "Making a Continuous Belt from sheet stock"
+excerpt_separator: "<!--more-->"
+categories:
+  - PrintShift
+tags:
+  - Conveyor Belt
+  - Continuous
+  - Tutorial
+  - Build
+---
+
+
 # Making a Continuous Belt.
 
 This page details how to build a continuous loop conveyor belt from a flat sheet of material.   It will enable you to test out any material on your PrintShift or other belt-based printer, and is widely applicable for joining strips of material.  
+
+<!--more-->
 
 ## Materials Needed
 1. Belt Joining Tape.  What sort of tape!?  Three things to consider are:
